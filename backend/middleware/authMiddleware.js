@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel.js')
 const Recipe = require('../models/recipeModel')
+const Review = require('../models/reviewModel')
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
@@ -42,10 +43,19 @@ const admin = (req, res, next) => {
 const Chefe = async (req, res, next) => {
   const { id } = req.params
   const recipe = await Recipe.findById(id)
-  if (recipe.author.toString() === req.user._id.toString()) {
+  if (recipe.author.toString() === req.user.id) {
     next()
   } else {
     throw new Error('Not Authorized')
   }
 }
-module.exports = { protect, admin, Chefe }
+const EditReview = async (req, res, next) => {
+  const { reviewId } = req.params
+  const review = await Review.findById(reviewId)
+  if (review.author.toString() === req.user.id) {
+    next()
+  } else {
+    throw new Error('Not Authorized')
+  }
+}
+module.exports = { protect, admin, Chefe, EditReview }

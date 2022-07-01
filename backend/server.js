@@ -3,6 +3,8 @@ const PORT = process.env.PORT || 8000
 const dotenv = require('dotenv').config()
 const colors = require('colors')
 const connectDB = require('./config/db.js')
+const recipeRoutes = require('./routes/recipeRoutes')
+const userRoutes = require('./routes/userRoutes')
 const { errorHandler } = require('./middleware/errorMiddleware')
 const path = require('path')
 //connect to database
@@ -20,6 +22,6 @@ app.use('/api/users', userRoutes)
 //Error Handler middleware
 app.use(errorHandler)
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`)
 })

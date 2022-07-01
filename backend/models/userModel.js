@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
     image: {
       type: String,
     },
+    isChefe: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

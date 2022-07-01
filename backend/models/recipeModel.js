@@ -19,6 +19,10 @@ const recibeSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
     calories: {
       type: Number,
       required: true,

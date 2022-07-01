@@ -75,9 +75,9 @@ const loginUser = asyncHandler(async (req, res) => {
 //@des Get user
 //@route /api/users/:id
 //@access Private
-const getUser = asyncHandler(async (req, res) => {
+const getChefe = asyncHandler(async (req, res) => {
   const { id } = req.params
-  const user = await User.findById(id)
+  const user = await User.findById(id).populate('recipe')
   if(!user) {
     res.status(401)
     throw new Error('user not found')
@@ -101,6 +101,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  getUser,
-  getAllUsers,
+  getChefe,
+  getAllChefes,
 }
