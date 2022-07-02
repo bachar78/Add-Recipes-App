@@ -14,6 +14,20 @@ const getAllRecipes = asyncHandler(async (req, res) => {
   res.status(200).json(recipes)
 })
 
+//@des Get all Recipes of a specific Chefe
+//@route /api/recipes/:chefeId
+//@access Public
+const getChefeRecipes = asyncHandler(async (req, res) => {
+  const {chefeId} = req.params
+  const recipes = await Recipe.find({ author: chefeId })
+  if (!recipes) {
+    res.status(401)
+    throw new Error('Recipes not found')
+  }
+  res.status(200).json(recipes)
+})
+
+
 //@des Get a single recipe
 //@route /api/recipes/:id
 //@access Public
@@ -113,4 +127,5 @@ module.exports = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  getChefeRecipes,
 }

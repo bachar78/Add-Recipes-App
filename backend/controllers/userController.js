@@ -77,7 +77,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //@access Private
 const getChefe = asyncHandler(async (req, res) => {
   const { id } = req.params
-  const user = await User.findById(id).populate('recipe')
+  const user = await User.findById(id)
   if(!user) {
     res.status(401)
     throw new Error('user not found')
@@ -88,9 +88,9 @@ const getChefe = asyncHandler(async (req, res) => {
 //@des Fetch all users
 //@route Get /api/users/all
 //@access public
-const getAllUsers = asyncHandler(async (req, res) => {
-  const allUsers = await User.find({}).select('-password')
-  if (allUsers) {
+const getAllChefes = asyncHandler(async (req, res) => {
+  const allChefes = await User.find({isChefe:true}).select('-password')
+  if (allChefes) {
     res.status.json(allUsers)
   } else {
     res.status(404)

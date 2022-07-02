@@ -24,7 +24,7 @@ const createReview = asyncHandler(async (req, res) => {
     author: req.user._id,
   })
   recipe.reviews.push(newReview._id)
-  await campground.save()
+  await recipe.save()
 
   if (!newReview) {
     res.status(400)
@@ -41,7 +41,7 @@ const getReviews = asyncHandler(async (req, res) => {
   const recipe = await Recipe.findById(id)
   if (!recipe) {
     res.status(400)
-    throw new Error('Campground not found')
+    throw new Error('Recipe not found')
   }
   const reviews = await Review.find({ recipe: recipe._id }).populate('author')
   if (!reviews) {

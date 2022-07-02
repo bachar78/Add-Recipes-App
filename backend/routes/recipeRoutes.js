@@ -12,6 +12,7 @@ const {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  getChefeRecipes,
 } = require('../controllers/recipeControloer.js')
 
 router.route('/').post(protect, createRecipe).get(getAllRecipes)
@@ -20,5 +21,6 @@ router
   .get(protect, getRecipe)
   .delete(protect, Chefe, deleteRecipe)
   .put(protect, Chefe, updateRecipe)
+router.route('/:chefeId').get(protect, getChefeRecipes)
 
 module.exports = router
