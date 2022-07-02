@@ -14,7 +14,7 @@ const {
   deleteRecipe,
   getChefeRecipes,
 } = require('../controllers/recipeControloer.js')
-
+const {addToFavourites} = require('../controllers/userController')
 router.route('/').post(protect, createRecipe).get(getAllRecipes)
 router
   .route('/:id')
@@ -22,5 +22,6 @@ router
   .delete(protect, Chefe, deleteRecipe)
   .put(protect, Chefe, updateRecipe)
 router.route('/:chefeId').get(protect, getChefeRecipes)
+router.route('/:recipeId/addFoavourite').get(protect, addToFavourites)
 
 module.exports = router

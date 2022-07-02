@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const generateToken = require('../utils/generateToken.js')
 const { cloudinary } = require('../utils/cloudinary')
-
+const Recipe = require('../models/recipeModel.js')
 //@des Register a new user
 //@route POST /api/users
 //@access Public
@@ -72,24 +72,25 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-//@des Get user
+//@des Get a chefe
 //@route /api/users/:id
 //@access Private
 const getChefe = asyncHandler(async (req, res) => {
   const { id } = req.params
   const user = await User.findById(id)
-  if(!user) {
+  const recipes = await Recipe.find({ author: id })
+  if (!user) {
     res.status(401)
     throw new Error('user not found')
   }
-  res.status(200).json(user)
+  res.status(200).json({ user, recipes })
 })
 
-//@des Fetch all users
+//@des Fetch all chefes
 //@route Get /api/users/all
 //@access public
 const getAllChefes = asyncHandler(async (req, res) => {
-  const allChefes = await User.find({isChefe:true}).select('-password')
+  const allChefes = await User.find({ isChefe: true }).select('-password')
   if (allChefes) {
     res.status.json(allUsers)
   } else {
@@ -97,10 +98,22 @@ const getAllChefes = asyncHandler(async (req, res) => {
     throw Error('Users Not Found')
   }
 })
+//@des Add to favourites
+//@route Get /api/users/addFavourites
+//@access public
+const addToFavourites = asyncHandler(async (req, res) => {
+  const { recipeId } = req.params
+  const user = await User.find(req.user._id)
+  const recipe = await Recipe.findById(recipeId)
+  user.favourites.push(recipe._id)
+  await user.save()
+  res.status(200).json('success')
+})
 
 module.exports = {
   registerUser,
   loginUser,
   getChefe,
   getAllChefes,
+  addToFavourites,
 }
