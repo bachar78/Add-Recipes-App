@@ -8,7 +8,7 @@ const recibeSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ['vegetarian', 'salad', 'desert', 'surprise basket'],
+      enum: ['vegetarian', 'salad', 'desert', 'mainCourse'],
       required: [true, 'Please choose the basket name'],
     },
     ingredients: [String],
