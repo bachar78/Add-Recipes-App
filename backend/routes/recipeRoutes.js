@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { protect, Chefe } = '../middleware/authMiddleware.js'
+const { protect, Chefe } = require('../middleware/authMiddleware.js')
 const reviewRouter = require('./reviewRoutes.js')
 
 //Re-route into review router
@@ -14,7 +14,8 @@ const {
   deleteRecipe,
   getChefeRecipes,
 } = require('../controllers/recipeControloer.js')
-const {addToFavourites} = require('../controllers/userController')
+const { addToFavourites } = require('../controllers/userController')
+
 router.route('/').post(protect, createRecipe).get(getAllRecipes)
 router
   .route('/:id')

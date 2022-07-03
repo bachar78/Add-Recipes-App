@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux'
 
 
 
-const PrivateRoute = () => {
-  const { user, isLoading } = useSelector((state) => state.auth)
- 
+const ChefeRoute = () => {
+  const { chefe, isLoading } = useSelector((state) => state.auth)
 
   if (isLoading) {
     return <Spinner />
   }
-  return user.isChefe ? <Outlet /> : <Navigate to='/' />
+  return chefe.isChefe ? <Outlet /> : <Navigate to='/' />
 }
 
-export default PrivateRoute
+export default ChefeRoute

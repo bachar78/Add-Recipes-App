@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 8000
 const dotenv = require('dotenv').config()
 const colors = require('colors')
 const connectDB = require('./config/db.js')
+// const recipeRoutes = require('./routes/recipeRoutes')
 const recipeRoutes = require('./routes/recipeRoutes')
 const userRoutes = require('./routes/userRoutes')
 const { errorHandler } = require('./middleware/errorMiddleware')

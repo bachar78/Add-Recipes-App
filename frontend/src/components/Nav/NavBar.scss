@@ -1,0 +1,33 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 8vh;
+  padding: 0 2rem;
+
+  &__logo {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 2;
+    &-icon {
+      font-size: 2rem;
+    }
+  }
+  &__links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-left: 2rem;
+      svg {
+        margin-right: .3rem;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

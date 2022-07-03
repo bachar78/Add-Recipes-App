@@ -5,15 +5,15 @@ export const useAuthStatus = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const { user } = useSelector((state) => state.auth)
+  const { chefe } = useSelector((state) => state.auth)
   useEffect(() => {
-    if (user) {
+    if (chefe) {
       setLoggedIn(true)
     } else {
       setLoggedIn(false)
     }
     setLoading(false)
-  }, [user])
+  }, [chefe])
 
   return { loggedIn, loading }
 }

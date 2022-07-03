@@ -13,3 +13,5 @@ router
   .route('/reviewId')
   .put(protect, EditReview, updateReview)
   .delete(protect, EditReview, deleteReview)
+
+module.exports = router

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-
-const recibeSchema = new mongoose.Schema(
+const {Schema} = mongoose
+const recibeSchema = new Schema(
   {
     title: {
       type: String,
@@ -18,10 +18,6 @@ const recibeSchema = new mongoose.Schema(
     number_serving: {
       type: Number,
       required: true,
-    },
-    isFavourite: {
-      type: Boolean,
-      default: false,
     },
     calories: {
       type: Number,
@@ -41,4 +37,4 @@ const recibeSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export default mongoose.model('Recipe', recibeSchema)
+module.exports = mongoose.model('Recipe', recibeSchema)
