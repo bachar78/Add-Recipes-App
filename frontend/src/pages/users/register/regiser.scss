@@ -60,8 +60,8 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-   cursor: pointer;
-  padding: 1rem 2rem;
+  cursor: pointer;
+  padding: 1rem 3rem;
 
   font-size: 1.2rem;
   outline: none;
@@ -71,24 +71,36 @@ select {
   margin: 1rem;
   overflow: hidden;
   position: relative;
-  
+
   label {
     margin-right: 1rem;
   }
 }
 
-
 .select::after {
   content: '\25BC';
   position: absolute;
-  top: .7rem;
-  right: 6rem;
+  top: 0.7rem;
+  right: 4rem;
   pointer-events: none;
-  padding: .5rem;
+  padding: 0.5rem;
   transition: all 0.5s ease;
 }
 
 .select:hover::after {
   background: black;
   color: white;
+}
+
+.recipe__ingredients {
+  h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      font-size: 2rem;
+      margin: 0rem 1rem;
+      color: red;
+    }
+  }
 }

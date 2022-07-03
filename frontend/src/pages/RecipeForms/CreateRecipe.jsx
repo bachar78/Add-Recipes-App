@@ -3,33 +3,26 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../../components/spinner/Spinner'
 import { GiCook } from 'react-icons/gi'
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 
 function CreateRecipe() {
   const { chefe } = useSelector((state) => state.auth)
   // const { isLoading, isError, isSuccess, message } = useSelector(
   //   (state) => state.tasks
   // )
+
   const [formData, setFormData] = useState({
     title: '',
     category: '',
-    ingredients: [],
     summary: '',
     instructions: '',
     image: '',
     number_serving: 4,
     calories: 0,
   })
-  const {
-    title,
-    category,
-    ingredients,
-    summary,
-    instructions,
-    image,
-    number_serving,
-    calories,
-  } = formData
- const onChange = (e) => {
+  const { title, category, summary, image, number_serving, calories } = formData
+
+  const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   const [inputState, setInputState] = useState('')
@@ -43,25 +36,40 @@ function CreateRecipe() {
       setFormData((prev) => ({ ...prev, image: reader.result }))
     }
   }
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error(message)
-  //   }
-  //   if (isSuccess) {
-  //     dispatch(reset())
-  //     navigate('/profile/tasks')
-  //   }
-  //   dispatch(reset())
-  // }, [isError, message, isSuccess, dispatch, navigate])
 
   const onSubmit = (e) => {
     e.preventDefault()
-    // dispatch(createTask({ task, description, status, deadline }))
+    console.log(formData)
   }
 
   // if (isLoading) {
   //   return <Spinner />
   // }
+  const [ingredients, setIngredients] = useState([''])
+  const [instructions, setInstructions] = useState([''])
+  console.log({...formData, ingredients: ingredients, instructions: instructions})
+  const handleIngredientRemove = (index) => {
+    const list = [...ingredients]
+    list.splice(index, 1)
+    setIngredients(list)
+  }
+
+  const handleIngredient = (e, index) => {
+    const list = [...ingredients]
+    list[index] = e.target.value
+    setIngredients(list)
+  }
+  const handleInstructionRemove = (index) => {
+    const list = [...instructions]
+    list.splice(index, 1)
+    setInstructions(list)
+  }
+
+  const handleInstruction = (e, index) => {
+    const list = [...instructions]
+    list[index] = e.target.value
+    setInstructions(list)
+  }
   return (
     <div className='flex-column login'>
       <h1>
@@ -98,17 +106,80 @@ function CreateRecipe() {
             value={summary}
             onChange={onChange}
             autoComplete='off'
+            name='summary'
           />
         </div>
-        <div className='flex-column'>
-          <label htmlFor='instructions'>Instructions</label>
-          <textarea
-            type='text'
-            id='instructions'
-            value={instructions}
-            onChange={onChange}
-            autoComplete='off'
-          />
+        <div className='recipe__ingredients'>
+          <h2>
+            {' '}
+            Add ingredients{' '}
+            <AiOutlinePlusCircle
+              onClick={() => setIngredients([...ingredients, ''])}
+            />
+          </h2>
+
+          {ingredients.map((ingredient, index) => (
+            <div
+              key={index}
+              className='flex-column'
+              style={{ marginBottom: '2rem' }}
+            >
+              <label htmlFor='ingredient'>Ingredient {index + 1}</label>
+              <input
+                type='text'
+                id='summary'
+                value={ingredient}
+                onChange={(e) => handleIngredient(e, index)}
+                autoComplete='off'
+              />
+              {ingredients.length > 1 && (
+                <h2>
+                  Remove Ingredient{' '}
+                  <AiOutlineMinusCircle
+                    onClick={() => {
+                      handleIngredientRemove(index)
+                    }}
+                  />
+                </h2>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className='recipe__ingredients'>
+          <h2>
+            {' '}
+            Add Steps (Instructions){' '}
+            <AiOutlinePlusCircle
+              onClick={() => setInstructions([...instructions, ''])}
+            />
+          </h2>
+
+          {instructions.map((instruction, index) => (
+            <div
+              key={index}
+              className='flex-column'
+              style={{ marginBottom: '2rem' }}
+            >
+              <label htmlFor='instruction'>Step {index + 1}</label>
+              <input
+                type='text'
+                id='summary'
+                value={instruction}
+                onChange={(e) => handleInstruction(e, index)}
+                autoComplete='off'
+              />
+              {instructions.length > 1 && (
+                <h2>
+                  Remove Instruction{' '}
+                  <AiOutlineMinusCircle
+                    onClick={() => {
+                      handleInstructionRemove(index)
+                    }}
+                  />
+                </h2>
+              )}
+            </div>
+          ))}
         </div>
         <div className='flex-column'>
           <label htmlFor='number_serving'>Calories</label>
@@ -118,19 +189,24 @@ function CreateRecipe() {
             value={calories}
             onChange={onChange}
             autoComplete='off'
+            name='calories'
           />
         </div>
-        <div className='select' style={{width: '40%'}}>
+        <div className='select' style={{ width: '40%' }}>
           <label htmlFor='category'>Category</label>
           <select name='category' id='category' onChange={onChange}>
+            <option value='vegetarian'>Select One</option>
             <option value='vegetarian'>Vegetarian</option>
             <option value='salad'>Salad</option>
             <option value='desert'>Desert</option>
-            <option value='finished'>mainCourse</option>
+            <option value='mainCourse'>Main Course</option>
           </select>
         </div>
-        <div className='flex-column'>
-          <label htmlFor='image'>Insert Your Image</label>
+        <div
+          className='flex-column'
+          style={{ border: '2px solid black', padding: '1rem' }}
+        >
+          <label htmlFor='image'>Insert the Image of the recipe</label>
           <input
             type='file'
             className='form-control'

@@ -13,7 +13,7 @@ const recibeSchema = new Schema(
     },
     ingredients: [String],
     summary: { type: String, required: true },
-    instructions: { type: String, required: true },
+    instructions: [String],
     image: { type: String },
     number_serving: {
       type: Number,
