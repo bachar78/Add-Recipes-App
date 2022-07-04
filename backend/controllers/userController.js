@@ -3,13 +3,13 @@ const User = require('../models/userModel.js')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const generateToken = require('../utils/generateToken.js')
-const { cloudinary } = require('../utils/cloudinary')
+const { cloudinary } = require('../utils/cloudinary.js')
 const Recipe = require('../models/recipeModel.js')
 //@des Register a new user
 //@route POST /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, image } = req.body
+  const { name, email, password, image, isChefe } = req.body
 
   //Validation
   if (!name || !email || !password) {
@@ -27,7 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10)
   const hashedPassword = await bcrypt.hash(password, salt)
   const uploadedResponse = await cloudinary.uploader.upload(image, {
-    upload_preset: 'Add-recepies',
+    upload_preset: 'task-manager',
   })
 
   //create user
@@ -36,6 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
     image: uploadedResponse.url,
+    isChefe,
   })
   if (user) {
     res.status(201).json({
@@ -43,6 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       image: uploadedResponse.url,
+      isChefe: user.isChefe,
       token: generateToken(user._id),
     })
   } else {
@@ -64,6 +66,7 @@ const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       image: user.image,
+      isChefe: user.isChefe,
       token: generateToken(user._id),
     })
   } else {

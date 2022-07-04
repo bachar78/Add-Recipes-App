@@ -47,7 +47,7 @@ function CreateRecipe() {
   // }
   const [ingredients, setIngredients] = useState([''])
   const [instructions, setInstructions] = useState([''])
-  console.log({...formData, ingredients: ingredients, instructions: instructions})
+
   const handleIngredientRemove = (index) => {
     const list = [...ingredients]
     list.splice(index, 1)

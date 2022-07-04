@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-
+import { reset, login } from '../../../features/auth/authSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../../../components/spinner/Spinner'
@@ -17,16 +17,15 @@ function Login() {
   )
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(message)
-  //   }
-  //   // Redirect when logged in
-  //   if (user) {
-  //     navigate('/')
-  //   }
-
-  // }, [isError, message, navigate, user])
+  useEffect(() => {
+    if (isError) {
+      console.log(message)
+    }
+    // Redirect when logged in
+    if (chefe) {
+      navigate('/')
+    }
+  }, [isError, message, navigate, chefe])
 
   const { email, password } = formData
   const onChange = (e) => {
@@ -34,10 +33,11 @@ function Login() {
   }
   const onSubmit = (e) => {
     e.preventDefault()
-    const userData = {
+    const chefeData = {
       email,
       password,
     }
+    dispatch(login(chefeData))
   }
   if (isLoading) {
     return <Spinner />

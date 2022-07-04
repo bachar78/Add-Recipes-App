@@ -1,9 +1,23 @@
 import './NavBar.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { MdFoodBank } from 'react-icons/md'
 import { FaSignInAlt } from 'react-icons/fa'
 import { AiOutlineTeam } from 'react-icons/ai'
+import { logout, reset } from '../../features/auth/authSlice'
+import { FaSignOutAlt } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+
 function NavBar() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { chefe, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  )
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/login')
+  }
   return (
     <div className='nav'>
       <Link to='/' className='nav__logo'>
@@ -23,6 +37,12 @@ function NavBar() {
               </div>
               <h5>{member.name}</h5>
             </li> */}
+        <li>
+          <button onClick={onLogout}>
+            {' '}
+            <FaSignOutAlt /> Logout
+          </button>
+        </li>
         <li>
           <Link to='/login' className='nav__links-item'>
             <FaSignInAlt />

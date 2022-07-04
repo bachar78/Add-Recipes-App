@@ -1,13 +1,15 @@
 import axios from 'axios'
-const API_URL = '/api/users'
+const API_URL = 'http://localhost:5001/api/users'
 
 //Register user
 
 const register = async (chefeData) => {
   const { data } = await axios.post(API_URL, chefeData)
+  console.log(data)
   if (data) {
     localStorage.setItem('chefe', JSON.stringify(data))
   }
+  return data
 }
 
 //Login user
@@ -23,7 +25,7 @@ const login = async (chefeData) => {
 const logout = () => localStorage.removeItem('chefe')
 
 //Get Chefes
-const GetAllChefes = async () => {
+const getAllChefes = async () => {
   const { data } = axios.get(`${API_URL}/chefes`)
   return data
 }
@@ -35,7 +37,7 @@ const getChefe = async (id) => {
 }
 
 const authService = {
-  GetAllChefes,
+  getAllChefes,
   getChefe,
   register,
   logout,

@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
+import { register } from '../../../features/auth/authSlice'
 import Spinner from '../../../components/spinner/Spinner'
 import './regiser.scss'
 function Register() {
+  const [isChefe, setIsChefe] = useState(false)
   const [inputState, setInputState] = useState('')
   const [formData, setFormData] = useState({
     name: '',
@@ -14,23 +16,23 @@ function Register() {
     password2: '',
     image: '',
   })
-  const { name, email, position, password, password2, image } = formData
+  const { name, email, password, password2, image } = formData
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { chefe, isLoading, isError, isSuccess, message } = useSelector(
+  const { chefe, isLoading, isError, message } = useSelector(
     (state) => state.auth
   )
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(message)
-  //   }
+  useEffect(() => {
+    if (isError) {
+      console.log(message)
+    }
 
-  //   // Redirect when registered
-  //   if (user) {
-  //     navigate('/')
-  //   }
-  // }, [isError, user, message, navigate])
+    // Redirect when registered
+    if (chefe) {
+      navigate('/')
+    }
+  }, [isError, chefe, message, navigate])
 
   const setImageUrl = (e) => {
     const file = e.target.files[0]
@@ -49,13 +51,14 @@ function Register() {
     e.preventDefault()
     if (password !== password2) {
     } else {
-      const memberData = {
+      const chefeData = {
         name,
         email,
-        position,
         password,
         image,
+        isChefe,
       }
+      dispatch(register(chefeData))
     }
   }
   if (isLoading) {
@@ -125,12 +128,12 @@ function Register() {
         <div className='chefe'>
           <label> Are You Chefe ?</label>
           <input
-          style={{width: "10%"}}
+            style={{ width: '10%' }}
             type='checkbox'
             name='isChefe'
-            // onChange={(e) =>
-            //   setFeatured(e.target.checked ? e.target.value : false)
-            // }
+            onChange={(e) =>
+              setIsChefe(e.target.checked ? e.target.value : false)
+            }
             value='true'
           />
         </div>
