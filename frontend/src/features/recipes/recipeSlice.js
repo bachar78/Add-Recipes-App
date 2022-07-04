@@ -18,7 +18,7 @@ export const createRecipe = createAsyncThunk(
   async (recipeData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.chefe.token
-      // return await recipesService.createRecipe(recipeData, token)
+      return await recipesService.createRecipe(recipeData, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -37,7 +37,46 @@ export const updateRecipe = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.chefe.token
-      // return await recipesService.updateRecipe(data, token)
+      return await recipesService.updateRecipe(data, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Get All Recipes
+export const getAllRecipes = createAsyncThunk(
+  'recipes/all',
+  async (_, thunkAPI) => {
+    try {
+      return await recipesService.getAllRecipes()
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+//View a single Recipe
+export const getRecipe = createAsyncThunk(
+  'recipe/get',
+  async (recipieId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.chefe.token
+      return await recipesService.getRecipe(recipieId, token)
     } catch (error) {
       const message =
         (error.response &&
