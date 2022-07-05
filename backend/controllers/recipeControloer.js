@@ -8,22 +8,40 @@ const { cloudinary } = require('../utils/cloudinary.js')
 //@access Public
 const getRecipesHome = asyncHandler(async (req, res) => {
   const vegetarian = await Recipe.find({ category: 'vegetarian' })
-    .limit(4)
-    .select(['title', 'image'])
+    .limit(9)
+    .select(['title', 'image', 'category'])
+    .populate('author', 'name')
   const desert = await Recipe.find({ category: 'desert' })
-    .limit(4)
-    .select(['title', 'image'])
+    .limit(9)
+    .select(['title', 'image', 'category'])
+    .populate('author', 'name')
   const chefes = await User.find({ isChefe: true })
-    .limit(4)
+    .limit(9)
     .select(['name', 'image'])
-  // res.status(200).json([...list, ...chefes])
-  console.log([...vegetarian, ...chefes, ...desert])
+  res.status(200).json({ vegetarian, desert, chefes })
 })
+
 //@des Get all Recipes for the homepage
 //@route /api/recipes
 //@access Public
-const getAllRecipes = asyncHandler(async (req, res) => {
-  const recipes = await Recipe.find({})
+const getCategoryRecipes = asyncHandler(async (req, res) => {
+  const { category } = req.query
+  const recipes = await Recipe.find({ category: category })
+  if (!recipes) {
+    res.status(401)
+    throw new Error('Recipes not found')
+  }
+  res.status(200).json(recipes)
+})
+
+//@des Get Recipes from Search Bar
+//@route /api/recipes
+//@access Public
+const getSearchRecipes = asyncHandler(async (req, res) => {
+  const { keyword } = req.query
+  const recipes = await Recipe.find({
+    title: { $regex: keyword, $options: 'i' },
+  })
   if (!recipes) {
     res.status(401)
     throw new Error('Recipes not found')
@@ -139,11 +157,12 @@ const deleteRecipe = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-  getAllRecipes,
+  getCategoryRecipes,
   getRecipe,
   createRecipe,
   updateRecipe,
   deleteRecipe,
   getChefeRecipes,
   getRecipesHome,
+  getSearchRecipes,
 }

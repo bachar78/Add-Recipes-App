@@ -22,7 +22,7 @@ function NavBar() {
     <div className='nav'>
       <Link to='/' className='nav__logo'>
         <MdFoodBank className='nav__logo-icon' />
-        <h1>Add-Recipes</h1>
+        <h1 className='logo'>Add-Recipes</h1>
       </Link>
       <ul className='nav__links'>
         {/* <li>
@@ -38,9 +38,9 @@ function NavBar() {
               <h5>{member.name}</h5>
             </li> */}
         <li>
-          <Link to='/createRecipe' className='nav__links-item'>
+          <button onClick={()=> navigate('/create')} className='nav__links-item'>
             <h2>Create Recipe</h2>
-          </Link>
+          </button>
         </li>
         <li onClick={onLogout}>
           <button>

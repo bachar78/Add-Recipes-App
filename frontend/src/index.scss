@@ -1,13 +1,20 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  margin: 0rem auto;
-  max-width: 1440px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
   background: #f1f1f1;
   --primary: #2d2d2d;
   --secondary: #535353;
-  
+  margin: 0% 5%;
 }
 
 h1 {
@@ -20,8 +27,13 @@ h2 {
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: var(--secondary);
+}
+
+h4 {
+  font-size: 1rem;
+  color: rgb(56, 56, 56);
 }
 
 ul {
@@ -29,14 +41,8 @@ ul {
 }
 
 a {
-  color: inherit;
+  color: rgb(56, 56, 56);
   text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 p {

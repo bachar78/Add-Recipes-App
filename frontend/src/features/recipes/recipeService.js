@@ -9,7 +9,6 @@ const createRecipe = async (recipeData, token) => {
     },
   }
   const { data } = await axios.post(API_URL, recipeData, config)
-  console.log(data)
   return data
 }
 
@@ -29,16 +28,20 @@ const updateRecipe = async (data, token) => {
 }
 
 //Get all recipes
-const getAllRecipes = async () => {
-  const { data } = await axios.get(API_URL)
+const getAllRecipes = async (query) => {
+  const { data } = await axios.get(`${API_URL}?category=${query}`)
+  return data
+}
+
+//Get all recipes
+const getSearchRecipes = async (query) => {
+  const { data } = await axios.get(`${API_URL}/search?keyword=${query}`)
   return data
 }
 
 //Get home recipes
 const getHomeRecipes = async () => {
-  const { data } = await axios.get(
-    `${API_URL}/home`
-  )
+  const { data } = await axios.get(`${API_URL}/home`)
   return data
 }
 
@@ -86,6 +89,7 @@ const recipesService = {
   addToFavourite,
   deleteRecipe,
   getHomeRecipes,
+  getSearchRecipes,
 }
 
 export default recipesService

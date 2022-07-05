@@ -5,6 +5,7 @@ const initialState = {
   recipes: [],
   recipe: {},
   chefeRecipes: [],
+  searchRecipes: [],
   recipesHome: [],
   isError: false,
   isSuccess: false,
@@ -56,12 +57,31 @@ export const updateRecipe = createAsyncThunk(
   }
 )
 
-// Get All Recipes
+// Get filter Recipes
 export const getAllRecipes = createAsyncThunk(
   'recipes/all',
-  async (_, thunkAPI) => {
+  async (query, thunkAPI) => {
     try {
-      return await recipesService.getAllRecipes()
+      return await recipesService.getAllRecipes(query)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Get Search Recipes
+export const getSearchRecipes = createAsyncThunk(
+  'recipes/search',
+  async (query, thunkAPI) => {
+    try {
+      return await recipesService.getSearchRecipes(query)
     } catch (error) {
       const message =
         (error.response &&
@@ -215,6 +235,19 @@ export const recipeSlice = createSlice({
         state.recipes = action.payload
       })
       .addCase(getAllRecipes.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getSearchRecipes.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getSearchRecipes.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.searchRecipes = action.payload
+      })
+      .addCase(getSearchRecipes.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

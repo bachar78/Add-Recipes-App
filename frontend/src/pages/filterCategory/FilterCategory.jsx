@@ -1,0 +1,44 @@
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import Spinner from '../../components/spinner/Spinner'
+import { reset, getAllRecipes } from '../../features/recipes/recipeSlice'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import './filterCategory.scss'
+
+const FilterCategory = () => {
+  const {Category} = useParams()
+  const dispatch = useDispatch()
+
+  const { recipes, isLoading, isError } = useSelector(
+    (state) => state.recipes
+  )
+
+  useEffect(() => {
+    dispatch(getAllRecipes(Category))
+    if (isError) {
+    }
+    return () => {
+      dispatch(reset())
+    }
+  }, [Category])
+
+  if (isLoading) {
+    return <Spinner />
+  }
+  return (
+    recipes && (
+      <div className='grid'>
+        {recipes.map((recipe) => (
+          <div className='card-filter' key={recipe._id}>
+            <img src={recipe.image} alt={recipe.title} />
+            <h4>{recipe.title}</h4>
+          </div>
+        ))}
+      </div>
+    )
+  )
+}
+
+export default FilterCategory

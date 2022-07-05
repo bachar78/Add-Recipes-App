@@ -7,18 +7,20 @@ const reviewRouter = require('./reviewRoutes.js')
 router.use('/:id/reviews', reviewRouter)
 
 const {
-  getAllRecipes,
+  getCategoryRecipes,
   getRecipe,
   createRecipe,
   updateRecipe,
   deleteRecipe,
   getChefeRecipes,
   getRecipesHome,
+  getSearchRecipes,
 } = require('../controllers/recipeControloer.js')
 const { addToFavourites } = require('../controllers/userController')
 
+router.route('/search').get(getSearchRecipes)
 router.route('/home').get(getRecipesHome)
-router.route('/').post(protect, createRecipe).get(getAllRecipes)
+router.route('/').post(protect, createRecipe).get(getCategoryRecipes)
 router
   .route('/:id')
   .get(protect, getRecipe)
@@ -26,6 +28,5 @@ router
   .put(protect, updateRecipe)
 router.route('/:chefeId').get(getChefeRecipes)
 router.route('/:recipeId/addFoavourite').get(protect, addToFavourites)
-
 
 module.exports = router
