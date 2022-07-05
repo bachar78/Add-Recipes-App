@@ -9,7 +9,7 @@ const createRecipe = async (recipeData, token) => {
     },
   }
   const { data } = await axios.post(API_URL, recipeData, config)
-
+  console.log(data)
   return data
 }
 
@@ -34,6 +34,14 @@ const getAllRecipes = async () => {
   return data
 }
 
+//Get home recipes
+const getHomeRecipes = async () => {
+  const { data } = await axios.get(
+    `${API_URL}/home`
+  )
+  return data
+}
+
 //get a single recipe
 const getRecipe = async (recipeId, token) => {
   const config = {
@@ -46,11 +54,38 @@ const getRecipe = async (recipeId, token) => {
   return data
 }
 
-//get the recipes for a specific chefe 
-const getChefeRecipes = async () => {
-  
+//get the recipes for a specific chefe
+const getChefeRecipes = async (chefeId) => {
+  const { data } = await axios.get(`${API_URL}/${chefeId}`)
+  return data
 }
 
-const recipesService = { createRecipe, updateRecipe, getAllRecipes, getRecipe }
+//Add recipe to favourite list
+const addToFavourite = async (recipeId) => {
+  const { data } = await axios.get(`${API_URL}/${recipeId}/addFoavourite`)
+  return data
+}
+
+//Delete Recipe
+const deleteRecipe = async (recipeId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const { data } = await axios.delete(`${API_URL}/${recipeId}`, config)
+  return data
+}
+
+const recipesService = {
+  createRecipe,
+  updateRecipe,
+  getAllRecipes,
+  getRecipe,
+  getChefeRecipes,
+  addToFavourite,
+  deleteRecipe,
+  getHomeRecipes,
+}
 
 export default recipesService

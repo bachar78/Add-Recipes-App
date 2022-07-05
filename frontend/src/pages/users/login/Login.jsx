@@ -12,20 +12,17 @@ function Login() {
     password: '',
   })
   const dispatch = useDispatch()
-  const { chefe, isLoading, isError, message } = useSelector(
+  const { chefe, isLoading, isError, message, isSuccess } = useSelector(
     (state) => state.auth
   )
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isError) {
-      console.log(message)
-    }
     // Redirect when logged in
-    if (chefe) {
+    if (isSuccess) {
       navigate('/')
     }
-  }, [isError, message, navigate, chefe])
+  }, [isError, message, navigate, isSuccess])
 
   const { email, password } = formData
   const onChange = (e) => {

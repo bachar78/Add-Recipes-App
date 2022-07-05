@@ -19,7 +19,7 @@ function Register() {
   const { name, email, password, password2, image } = formData
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { chefe, isLoading, isError, message } = useSelector(
+  const { chefe, isLoading, isError, message, isSuccess } = useSelector(
     (state) => state.auth
   )
 
@@ -29,10 +29,10 @@ function Register() {
     }
 
     // Redirect when registered
-    if (chefe) {
+    if (isSuccess) {
       navigate('/')
     }
-  }, [isError, chefe, message, navigate])
+  }, [isError, isSuccess, message, navigate])
 
   const setImageUrl = (e) => {
     const file = e.target.files[0]

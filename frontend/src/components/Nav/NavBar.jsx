@@ -38,7 +38,12 @@ function NavBar() {
               <h5>{member.name}</h5>
             </li> */}
         <li>
-          <button onClick={onLogout}>
+          <Link to='/createRecipe' className='nav__links-item'>
+            <h2>Create Recipe</h2>
+          </Link>
+        </li>
+        <li onClick={onLogout}>
+          <button>
             {' '}
             <FaSignOutAlt /> Logout
           </button>

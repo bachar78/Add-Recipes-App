@@ -4,18 +4,20 @@ import { useNavigate } from 'react-router-dom'
 import Spinner from '../../components/spinner/Spinner'
 import { GiCook } from 'react-icons/gi'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
+import { createRecipe, reset } from '../../features/recipes/recipeSlice'
 
 function CreateRecipe() {
+  const [ingredients, setIngredients] = useState([''])
+  const [instructions, setInstructions] = useState([''])
   const { chefe } = useSelector((state) => state.auth)
-  // const { isLoading, isError, isSuccess, message } = useSelector(
-  //   (state) => state.tasks
-  // )
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.recipes
+  )
 
   const [formData, setFormData] = useState({
     title: '',
     category: '',
     summary: '',
-    instructions: '',
     image: '',
     number_serving: 4,
     calories: 0,
@@ -37,17 +39,21 @@ function CreateRecipe() {
     }
   }
 
+  useEffect(() => {
+    if (isError) {
+      console.log(message)
+    }
+    if (isSuccess) {
+      navigate('/')
+      dispatch(reset())
+    }
+  }, [isError, message, isSuccess, navigate])
+
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
+    const recipeData = { ...formData, ingredients, instructions }
+    dispatch(createRecipe(recipeData))
   }
-
-  // if (isLoading) {
-  //   return <Spinner />
-  // }
-  const [ingredients, setIngredients] = useState([''])
-  const [instructions, setInstructions] = useState([''])
-
   const handleIngredientRemove = (index) => {
     const list = [...ingredients]
     list.splice(index, 1)
@@ -69,6 +75,9 @@ function CreateRecipe() {
     const list = [...instructions]
     list[index] = e.target.value
     setInstructions(list)
+  }
+  if (isLoading) {
+    return <Spinner />
   }
   return (
     <div className='flex-column login'>

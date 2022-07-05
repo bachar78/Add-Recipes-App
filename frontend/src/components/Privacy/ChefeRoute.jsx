@@ -1,15 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import Spinner from '../spinner/Spinner'
-import { useSelector } from 'react-redux' 
-
-
+import { useSelector } from 'react-redux'
 
 const ChefeRoute = () => {
-  const { chefe, isLoading } = useSelector((state) => state.auth)
+  const { chefe } = useSelector((state) => state.auth)
 
-  if (isLoading) {
-    return <Spinner />
-  }
   return chefe.isChefe ? <Outlet /> : <Navigate to='/' />
 }
 

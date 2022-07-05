@@ -13,16 +13,19 @@ const {
   updateRecipe,
   deleteRecipe,
   getChefeRecipes,
+  getRecipesHome,
 } = require('../controllers/recipeControloer.js')
 const { addToFavourites } = require('../controllers/userController')
 
+router.route('/home').get(getRecipesHome)
 router.route('/').post(protect, createRecipe).get(getAllRecipes)
 router
   .route('/:id')
   .get(protect, getRecipe)
-  .delete(protect, Chefe, deleteRecipe)
-  .put(protect, Chefe, updateRecipe)
-router.route('/:chefeId').get(protect, getChefeRecipes)
+  .delete(protect, deleteRecipe)
+  .put(protect, updateRecipe)
+router.route('/:chefeId').get(getChefeRecipes)
 router.route('/:recipeId/addFoavourite').get(protect, addToFavourites)
+
 
 module.exports = router

@@ -1,7 +1,24 @@
 const Recipe = require('../models/recipeModel.js')
+const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 const { cloudinary } = require('../utils/cloudinary.js')
 
+//@des Get recipes for Home page
+//@route Get /api/recipes/home
+//@access Public
+const getRecipesHome = asyncHandler(async (req, res) => {
+  const vegetarian = await Recipe.find({ category: 'vegetarian' })
+    .limit(4)
+    .select(['title', 'image'])
+  const desert = await Recipe.find({ category: 'desert' })
+    .limit(4)
+    .select(['title', 'image'])
+  const chefes = await User.find({ isChefe: true })
+    .limit(4)
+    .select(['name', 'image'])
+  // res.status(200).json([...list, ...chefes])
+  console.log([...vegetarian, ...chefes, ...desert])
+})
 //@des Get all Recipes for the homepage
 //@route /api/recipes
 //@access Public
@@ -18,7 +35,7 @@ const getAllRecipes = asyncHandler(async (req, res) => {
 //@route /api/recipes/:chefeId
 //@access Public
 const getChefeRecipes = asyncHandler(async (req, res) => {
-  const {chefeId} = req.params
+  const { chefeId } = req.params
   const recipes = await Recipe.find({ author: chefeId })
   if (!recipes) {
     res.status(401)
@@ -26,7 +43,6 @@ const getChefeRecipes = asyncHandler(async (req, res) => {
   }
   res.status(200).json(recipes)
 })
-
 
 //@des Get a single recipe
 //@route /api/recipes/:id
@@ -70,8 +86,9 @@ const createRecipe = asyncHandler(async (req, res) => {
     throw new Error('Please include all required fields')
   }
   const uploadedResponse = await cloudinary.uploader.upload(image, {
-    upload_preset: 'add-recipes',
+    upload_preset: 'task-manager',
   })
+
   //create recipe
   const newRecipe = await Recipe.create({
     title,
@@ -128,4 +145,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   getChefeRecipes,
+  getRecipesHome,
 }
