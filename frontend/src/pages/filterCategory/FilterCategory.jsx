@@ -8,12 +8,10 @@ import { Link } from 'react-router-dom'
 import './filterCategory.scss'
 
 const FilterCategory = () => {
-  const {Category} = useParams()
+  const { Category } = useParams()
   const dispatch = useDispatch()
 
-  const { recipes, isLoading, isError } = useSelector(
-    (state) => state.recipes
-  )
+  const { recipes, isLoading, isError } = useSelector((state) => state.recipes)
 
   useEffect(() => {
     dispatch(getAllRecipes(Category))
@@ -32,8 +30,10 @@ const FilterCategory = () => {
       <div className='grid'>
         {recipes.map((recipe) => (
           <div className='card-filter' key={recipe._id}>
-            <img src={recipe.image} alt={recipe.title} />
-            <h4>{recipe.title}</h4>
+            <Link to={`/recipe/${recipe._id}`}>
+              <img src={recipe.image} alt={recipe.title} />
+              <h4>{recipe.title}</h4>
+            </Link>
           </div>
         ))}
       </div>

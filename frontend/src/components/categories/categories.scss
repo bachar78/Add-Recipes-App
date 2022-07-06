@@ -15,6 +15,7 @@
   border-radius: 2rem;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
   img {
     border-radius: 2rem;
     width: 100%;
@@ -22,6 +23,7 @@
     object-fit: cover;
     position: absolute;
     left: 0;
+    
   }
   p {
     position: absolute;

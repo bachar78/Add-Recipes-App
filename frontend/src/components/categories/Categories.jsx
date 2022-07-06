@@ -1,6 +1,7 @@
 import './categories.scss'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/splide/dist/css/splide.min.css'
+import { Link } from 'react-router-dom'
 
 function Categories({ type }) {
   return (
@@ -18,12 +19,16 @@ function Categories({ type }) {
         >
           {type.map((recipe) => (
             <SplideSlide key={recipe._id}>
-              <div className='card'>
-                <p>{recipe.title}</p>
-                <img src={recipe.image} alt={recipe.title} />
-                <h3>Posted By: {recipe.author.name}</h3>
-                <div className='gradient'></div>
-              </div>
+              <Link to={`/recipe/${recipe._id}`}>
+                <div className='card'>
+                  <p>{recipe.title}</p>
+
+                  <img src={recipe.image} alt={recipe.title} />
+
+                  <h3>Posted By: {recipe.author.name}</h3>
+                  <div className='gradient'></div>
+                </div>
+              </Link>
             </SplideSlide>
           ))}
         </Splide>

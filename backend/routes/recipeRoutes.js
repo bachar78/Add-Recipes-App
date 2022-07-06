@@ -26,7 +26,7 @@ router
   .get(protect, getRecipe)
   .delete(protect, deleteRecipe)
   .put(protect, updateRecipe)
-router.route('/:chefeId').get(getChefeRecipes)
+router.route('/chefe/:chefeId').get(getChefeRecipes)
 router.route('/:recipeId/addFoavourite').get(protect, addToFavourites)
 
 module.exports = router

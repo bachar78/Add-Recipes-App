@@ -59,7 +59,7 @@ const getRecipe = async (recipeId, token) => {
 
 //get the recipes for a specific chefe
 const getChefeRecipes = async (chefeId) => {
-  const { data } = await axios.get(`${API_URL}/${chefeId}`)
+  const { data } = await axios.get(`${API_URL}/chefe/${chefeId}`)
   return data
 }
 

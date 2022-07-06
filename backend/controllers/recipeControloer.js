@@ -54,7 +54,11 @@ const getSearchRecipes = asyncHandler(async (req, res) => {
 //@access Public
 const getChefeRecipes = asyncHandler(async (req, res) => {
   const { chefeId } = req.params
-  const recipes = await Recipe.find({ author: chefeId })
+  const recipes = await Recipe.find({ author: chefeId }).populate('author', [
+    'name',
+    'email',
+    'image'
+  ])
   if (!recipes) {
     res.status(401)
     throw new Error('Recipes not found')

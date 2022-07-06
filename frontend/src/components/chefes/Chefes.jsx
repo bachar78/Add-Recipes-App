@@ -1,7 +1,7 @@
 import './chefe.scss'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/splide/dist/css/splide.min.css'
-
+import { Link } from 'react-router-dom'
 function Chefes({ chefes }) {
   return (
     chefes && (
@@ -18,11 +18,16 @@ function Chefes({ chefes }) {
         >
           {chefes.map((chef) => (
             <SplideSlide key={chef._id}>
-              <div className='chef-card'>
-                <p>Chef <br/>{chef.name}</p>
-                <img src={chef.image} alt={chef.name} />
-                <div className='gradient'></div>
-              </div>
+              <Link to={`/chefe/${chef._id}`}>
+                <div className='chef-card'>
+                  <p>
+                    Chef <br />
+                    {chef.name}
+                  </p>
+                  <img src={chef.image} alt={chef.name} />
+                  <div className='gradient'></div>
+                </div>
+              </Link>
             </SplideSlide>
           ))}
         </Splide>

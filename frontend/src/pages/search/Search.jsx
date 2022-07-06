@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { reset, getSearchRecipes } from '../../features/recipes/recipeSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Spinner from '../../components/spinner/Spinner'
+import { Link } from 'react-router-dom'
 
 function Search() {
   const { search } = useParams()
@@ -27,8 +28,10 @@ function Search() {
       <div className='grid'>
         {searchRecipes.map((recipe) => (
           <div className='card-filter' key={recipe._id}>
-            <img src={recipe.image} alt={recipe.title} />
-            <h4>{recipe.title}</h4>
+            <Link to={`/recipe/${recipe._id}`}>
+              <img src={recipe.image} alt={recipe.title} />
+              <h4>{recipe.title}</h4>
+            </Link>
           </div>
         ))}
       </div>
