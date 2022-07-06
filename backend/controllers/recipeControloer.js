@@ -21,14 +21,14 @@ const getRecipesHome = asyncHandler(async (req, res) => {
   res.status(200).json({ vegetarian, desert, chefes })
 })
 
-//@des Get all Recipes for the homepage
+//@des Get all Recipes 
 //@route /api/recipes
 //@access Public
 const getCategoryRecipes = asyncHandler(async (req, res) => {
   const { category } = req.query
   const recipes = await Recipe.find({ category: category })
   if (!recipes) {
-    res.status(401)
+    res.status(404)
     throw new Error('Recipes not found')
   }
   res.status(200).json(recipes)
@@ -43,7 +43,7 @@ const getSearchRecipes = asyncHandler(async (req, res) => {
     title: { $regex: keyword, $options: 'i' },
   })
   if (!recipes) {
-    res.status(401)
+    res.status(404)
     throw new Error('Recipes not found')
   }
   res.status(200).json(recipes)
@@ -60,7 +60,7 @@ const getChefeRecipes = asyncHandler(async (req, res) => {
     'image',
   ])
   if (!recipes) {
-    res.status(401)
+    res.status(404)
     throw new Error('Recipes not found')
   }
   res.status(200).json(recipes)

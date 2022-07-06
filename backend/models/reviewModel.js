@@ -12,7 +12,7 @@ const reviewSchema = new Schema({
   },
   recipe: {
     type: Schema.Types.ObjectId,
-    ref: 'Campground',
+    ref: 'Recipe',
   },
   author: {
     type: Schema.Types.ObjectId,

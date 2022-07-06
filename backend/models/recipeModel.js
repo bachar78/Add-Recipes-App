@@ -9,7 +9,7 @@ const recibeSchema = new Schema(
     category: {
       type: String,
       enum: ['vegetarian', 'salad', 'desert', 'mainCourse'],
-      required: [true, 'Please choose the basket name'],
+      required: [true, 'Please choose the category'],
     },
     ingredients: [String],
     summary: { type: String, required: true },

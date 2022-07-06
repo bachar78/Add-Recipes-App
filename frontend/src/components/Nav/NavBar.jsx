@@ -29,12 +29,6 @@ function NavBar() {
               <GiKnifeFork />
               <h2>Add Recipe</h2>
             </Link>
-            {/* <button
-              onClick={() => navigate('/create')}
-              className='nav__links-item'
-            >
-              <h2>Create Recipe</h2>
-            </button> */}
           </li>
         )}
         {chefe ? (
