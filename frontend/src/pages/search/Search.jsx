@@ -5,6 +5,7 @@ import { reset, getSearchRecipes } from '../../features/recipes/recipeSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Spinner from '../../components/spinner/Spinner'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 function Search() {
   const { search } = useParams()
@@ -25,7 +26,13 @@ function Search() {
   }
   return (
     searchRecipes && (
-      <div className='grid'>
+      <motion.div
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className='grid'
+      >
         {searchRecipes.map((recipe) => (
           <div className='card-filter' key={recipe._id}>
             <Link to={`/recipe/${recipe._id}`}>
@@ -34,7 +41,7 @@ function Search() {
             </Link>
           </div>
         ))}
-      </div>
+      </motion.div>
     )
   )
 }

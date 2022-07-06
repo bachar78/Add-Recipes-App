@@ -24,7 +24,7 @@ function Recipe() {
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: .75 }}
+        transition={{ duration: .5 }}
         className='detail-wrapper'
       >
         <div className='recipe-image'>
