@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Spinner from '../../components/spinner/Spinner'
 import { reset, getRecipe } from '../../features/recipes/recipeSlice'
+import { motion } from 'framer-motion'
 import './recipe.scss'
 
 function Recipe() {
@@ -10,7 +11,6 @@ function Recipe() {
   const { id } = useParams()
   const { recipe, isLoading, isError } = useSelector((state) => state.recipes)
   const [activeTab, setActiveTab] = useState('instructions')
-  console.log(recipe)
   useEffect(() => {
     dispatch(getRecipe(id))
   }, [id])
@@ -20,7 +20,13 @@ function Recipe() {
   }
   return (
     recipe && (
-      <div className='detail-wrapper'>
+      <motion.div
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: .75 }}
+        className='detail-wrapper'
+      >
         <div className='recipe-image'>
           <h2>{recipe.title}</h2>
           <img src={recipe.image} alt={recipe.title} />
@@ -85,7 +91,7 @@ function Recipe() {
             </ul>
           )}
         </div>
-      </div>
+      </motion.div>
     )
   )
 }

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/users/login/Login'
 import Register from './pages/users/register/Register'
@@ -12,14 +12,16 @@ import FilterCategory from './pages/filterCategory/FilterCategory'
 import SearchBar from './components/searchBaar/SearchBar'
 import Search from './pages/search/Search'
 import ChefeRecipe from './pages/chefe/ChefeRecipe'
+import { AnimatePresence } from 'framer-motion'
 function App() {
+  const location = useLocation()
   return (
-    <Router>
-      <div>
-        <NavBar />
-        <SearchBar />
-        <Filter />
-        <Routes>
+    <div>
+      <NavBar />
+      <SearchBar />
+      <Filter />
+      <AnimatePresence exitBeforeEnter>
+        <Routes location={location} key={location.pathname}>
           <Route path='/' element={<Home />} />
           <Route path='/searched/:search' element={<Search />} />
           <Route path='/filter/:Category' element={<FilterCategory />} />
@@ -31,8 +33,8 @@ function App() {
           <Route path='/recipe/:id' element={<Recipe />} />
           <Route path='/chefe/:chefId' element={<ChefeRecipe />} />
         </Routes>
-      </div>
-    </Router>
+      </AnimatePresence>
+    </div>
   )
 }
 

@@ -27,7 +27,13 @@ const FilterCategory = () => {
   }
   return (
     recipes && (
-      <div className='grid'>
+      <motion.div
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: .75 }}
+        className='grid'
+      >
         {recipes.map((recipe) => (
           <div className='card-filter' key={recipe._id}>
             <Link to={`/recipe/${recipe._id}`}>
@@ -36,7 +42,7 @@ const FilterCategory = () => {
             </Link>
           </div>
         ))}
-      </div>
+      </motion.div>
     )
   )
 }

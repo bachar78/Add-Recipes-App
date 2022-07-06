@@ -4,12 +4,14 @@ import { getRecipesHome } from '../features/recipes/recipeSlice'
 import Spinner from '../components/spinner/Spinner'
 import Categories from '../components/categories/Categories'
 import Chefes from '../components/chefes/Chefes'
+import { motion } from 'framer-motion'
+
 function Home() {
   const { chefe } = useSelector((state) => state.auth)
   const { recipesHome, isLoading, isError, message, isHome } = useSelector(
     (state) => state.recipes
   )
-  const { vegetarian, desert , chefes} = recipesHome
+  const { vegetarian, desert, chefes } = recipesHome
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -19,11 +21,18 @@ function Home() {
   if (isLoading) {
     return <Spinner />
   }
-  return <div>
-    <Categories type={vegetarian}/>
-    <Categories type={desert}/>
-    <Chefes chefes={chefes}/>
-  </div>
+  return (
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: .75 }}
+    >
+      <Categories type={vegetarian} />
+      <Categories type={desert} />
+      <Chefes chefes={chefes} />
+    </motion.div>
+  )
 }
 
 export default Home
