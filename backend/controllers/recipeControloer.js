@@ -40,7 +40,7 @@ const getCategoryRecipes = asyncHandler(async (req, res) => {
 const getSearchRecipes = asyncHandler(async (req, res) => {
   const { keyword } = req.query
   const recipes = await Recipe.find({
-    title: { $regex: keyword, $options: 'i' },
+    instructions: { $regex: keyword, $options: 'i' },
   })
   if (!recipes) {
     res.status(404)
@@ -73,7 +73,7 @@ const getRecipe = asyncHandler(async (req, res) => {
   const { id } = req.params
   const recipe = await Recipe.findById(id).populate('author', ['name', 'email'])
   if (!recipe) {
-    res.status(401)
+    res.status(404)
     throw new Error('Recipes not found')
   }
   res.status(200).json(recipe)
