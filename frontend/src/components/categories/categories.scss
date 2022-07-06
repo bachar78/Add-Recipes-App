@@ -1,5 +1,6 @@
 .wrapper {
   margin: 4rem 0rem;
+  cursor: grab;
   h1 {
     font-size: 1.5rem;
     color: var(--secondary);
@@ -15,7 +16,7 @@
   border-radius: 2rem;
   overflow: hidden;
   position: relative;
-  cursor: pointer;
+  cursor: grab;
   img {
     border-radius: 2rem;
     width: 100%;
@@ -23,7 +24,6 @@
     object-fit: cover;
     position: absolute;
     left: 0;
-    
   }
   p {
     position: absolute;
