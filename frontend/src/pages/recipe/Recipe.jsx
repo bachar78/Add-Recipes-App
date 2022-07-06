@@ -10,6 +10,7 @@ function Recipe() {
   const { id } = useParams()
   const { recipe, isLoading, isError } = useSelector((state) => state.recipes)
   const [activeTab, setActiveTab] = useState('instructions')
+  console.log(recipe)
   useEffect(() => {
     dispatch(getRecipe(id))
   }, [id])
@@ -24,7 +25,7 @@ function Recipe() {
           <h2>{recipe.title}</h2>
           <img src={recipe.image} alt={recipe.title} />
         </div>
-        <div className='infor'>
+        <div className='info'>
           <button
             onClick={() => setActiveTab('instructions')}
             className={`button ${
@@ -42,9 +43,46 @@ function Recipe() {
           {activeTab === 'instructions' && (
             <div>
               <p>{recipe.summary}</p>
-              <h4>Caloris: {recipe.calories}</h4>
-              
+              <p>
+                <b>Category:</b> {recipe.category}
+              </p>
+              <p>
+                <b>Caloris:</b> {recipe.calories}
+              </p>
+              <p>
+                <b>Number of Serving:</b> {recipe.number_serving} persons
+              </p>
+              <ul>
+                <h1>Way of Preparation</h1>
+                {recipe.instructions &&
+                  recipe.instructions.map((instruction, index) => (
+                    <li className='instruction' key={index}>
+                      <h4>Step {index + 1}</h4>
+                      <p>{instruction}</p>
+                    </li>
+                  ))}
+              </ul>
+
+              {recipe.author.name && (
+                <div className='contact'>
+                  <p>
+                    <b>Posted by:</b> {recipe.author.name}
+                  </p>
+                  <p>
+                    <b>Contact:</b> {recipe.author.email}
+                  </p>
+                </div>
+              )}
             </div>
+          )}
+          {activeTab === 'ingridients' && (
+            <ul>
+              <h4>Ingredients</h4>
+              {recipe.ingredients &&
+                recipe.ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))}
+            </ul>
           )}
         </div>
       </div>

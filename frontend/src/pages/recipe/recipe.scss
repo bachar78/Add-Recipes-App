@@ -1,20 +1,16 @@
-.detail-wrapper{
-  margin-top: 10rem;
-  margin-bottom: 5rem;
-  display: flex;
-  justify-content: center;
+.detail-wrapper {
   .active {
     background: linear-gradient(35deg, #494949, #313131);
     color: white;
   }
   .recipe-image {
-    flex: 1 0 50%;
+    width: 80%;
+    margin: 0 auto;
   }
   img {
-    width: 30rem;
+    width: 100%;
     height: 20rem;
     object-fit: cover;
-
   }
   h2 {
     margin-bottom: 2rem;
@@ -25,12 +21,20 @@
   }
   ul {
     margin-top: 2rem;
+    margin-bottom: 2rem;
   }
   p {
-    margin-top: 2rem;
+    margin: 1rem 0;
+    text-align: justify;
+    text-justify: inter-word;
   }
   h4 {
-    margin-top: 1rem;
+    margin: 1rem 0rem;
+  }
+  h1 {
+    font-size: 1.3rem;
+    text-decoration: underline;
+    margin-bottom: 1rem;
   }
 }
 
@@ -45,5 +49,20 @@
 }
 
 .info {
-  margin-left: 10rem;
+  width: 80%;
+  margin: 2rem auto;
+}
+.instruction {
+  margin-bottom: 1rem;
+h4 {
+  margin: 0;
+  text-decoration: underline;
+}
+p {
+  margin: 0;
+}
+}
+.contact {
+  display: flex;
+  justify-content: space-evenly;
 }

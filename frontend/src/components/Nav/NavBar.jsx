@@ -7,10 +7,11 @@ import { logout, reset } from '../../features/auth/authSlice'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 
+
 function NavBar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { chefe, isLoading, isError, message } = useSelector(
+  const { chefe } = useSelector(
     (state) => state.auth
   )
   const onLogout = () => {
