@@ -3,7 +3,7 @@ import recipesService from './recipeService'
 
 const initialState = {
   recipes: [],
-  recipe: {},
+  recipe: null,
   chefeRecipes: [],
   searchRecipes: [],
   recipesHome: [],
