@@ -4,20 +4,17 @@ import { MdFoodBank } from 'react-icons/md'
 import { FaSignInAlt } from 'react-icons/fa'
 import { AiOutlineTeam } from 'react-icons/ai'
 import { logout, reset } from '../../features/auth/authSlice'
-import { FaSignOutAlt } from 'react-icons/fa'
+import { GiKnifeFork } from 'react-icons/gi'
 import { useSelector, useDispatch } from 'react-redux'
-
 
 function NavBar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { chefe } = useSelector(
-    (state) => state.auth
-  )
+  const { chefe } = useSelector((state) => state.auth)
   const onLogout = () => {
     dispatch(logout())
     dispatch(reset())
-    navigate('/login')
+    navigate('/')
   }
   return (
     <div className='nav'>
@@ -26,54 +23,54 @@ function NavBar() {
         <h1 className='logo'>Add-Recipes</h1>
       </Link>
       <ul className='nav__links'>
-        {/* <li>
-              <button onClick={onLogout} className={styles.logout}>
-                {' '}
-                <FaSignOutAlt /> Logout
-              </button>
-            </li>
-            <li className={styles.user}>
-              <div className={styles.image}>
-                <img src={member.image} alt='user' />
-              </div>
-              <h5>{member.name}</h5>
-            </li> */}
-        <li>
-          <button onClick={()=> navigate('/create')} className='nav__links-item'>
-            <h2>Create Recipe</h2>
-          </button>
-        </li>
-        <li onClick={onLogout}>
-          <button>
-            {' '}
-            <FaSignOutAlt /> Logout
-          </button>
-        </li>
-        <li>
-          <Link to='/login' className='nav__links-item'>
-            <FaSignInAlt />
-            <h2>Login</h2>
-          </Link>
-        </li>
-        <li>
-          <Link to='/register' className='nav__links-item'>
-            <AiOutlineTeam /> <h2>Register</h2>
-          </Link>
-        </li>
-        {/* {member && member.isAdmin ? (
-          <li className={styles.admin}>
-            <div className={styles.select}>
-              <select onClick={onSelect}>
-                <option value='admin'>admin</option>
-                <option value='members'>members</option>
-                <option value='tasks'>Tasks</option>
-              </select>
-            </div>
+        {chefe && chefe.isChefe && (
+          <li>
+            <Link to='/create' className='nav__links-item'>
+              <GiKnifeFork />
+              <h2>Add Recipe</h2>
+            </Link>
+            {/* <button
+              onClick={() => navigate('/create')}
+              className='nav__links-item'
+            >
+              <h2>Create Recipe</h2>
+            </button> */}
           </li>
-        ) : null} */}
+        )}
+        {chefe ? (
+          <>
+            <li onClick={onLogout}>
+              <Link to='/login' className='nav__links-item'>
+                <FaSignInAlt />
+                <h2>Logout</h2>
+              </Link>
+            </li>
+            <li className='links-profile'>
+              <div className='profile'>
+                <img src={chefe.image} alt='user' />
+              </div>
+              <h5>{chefe.name}</h5>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to='/login' className='nav__links-item'>
+                <FaSignInAlt />
+                <h2>Login</h2>
+              </Link>
+            </li>
+            <li>
+              <Link to='/register' className='nav__links-item'>
+                <AiOutlineTeam /> <h2>Register</h2>
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </div>
   )
 }
 
 export default NavBar
+
